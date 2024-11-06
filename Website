@@ -1,0 +1,99 @@
+// Sample reservation data (email, name, time, and the day of the reservation)
+const reservations = [
+    { email: "john.doe@example.com", name: "John Doe", time: "10:00 AM", day: 1 },
+    { email: "jane.smith@example.com", name: "Jane Smith", time: "12:00 PM", day: 3 },
+    { email: "lucas.brown@example.com", name: "Lucas Brown", time: "2:00 PM", day: 5 },
+    { email: "emily.white@example.com", name: "Emily White", time: "4:00 PM", day: 7 }
+];
+
+// Function to generate the calendar and display reservations
+function generateCalendar() {
+    const calendarContainer = document.getElementById("calendar-container");
+
+    // Clear any previous content in the calendar container
+    calendarContainer.innerHTML = "";
+
+    // Create the days of the week (Sun, Mon, Tue, Wed, Thu, Fri, Sat)
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    daysOfWeek.forEach(day => {
+        const dayHeader = document.createElement("div");
+        dayHeader.className = "calendar-day header";
+        dayHeader.innerText = day;
+        calendarContainer.appendChild(dayHeader);
+    });
+
+    // Create the calendar days (1 to 31)
+    for (let i = 1; i <= 31; i++) {
+        const dayBox = document.createElement("div");
+        dayBox.className = "calendar-day";
+        dayBox.innerHTML = `<header>Day ${i}</header>`;
+
+        // Display reservations for this day (if any)
+        const dayReservations = reservations.filter(reservation => reservation.day === i);
+
+        if (dayReservations.length > 0) {
+            dayReservations.forEach(reservation => {
+                const reservationSlot = document.createElement("div");
+                reservationSlot.className = "reserved-slot";
+                reservationSlot.innerText = `${reservation.name} - ${reservation.time}`;
+                dayBox.appendChild(reservationSlot);
+            });
+        }
+
+        calendarContainer.appendChild(dayBox);
+    }
+}
+
+// Function to change the language of the page (English <-> Spanish)
+function changeLanguage() {
+    let currentLang = document.documentElement.lang;
+
+    if (currentLang === "en") {
+        document.documentElement.lang = "es";
+        document.getElementById("language-button").textContent = "Cambiar a Inglés";
+    } else {
+        document.documentElement.lang = "en";
+        document.getElementById("language-button").textContent = "Cambiar a Español";
+    }
+
+    // Update the text content for all elements with 'data-en' or 'data-es' attributes
+    const elements = document.querySelectorAll('[data-en], [data-es]');
+    elements.forEach(element => {
+        const lang = document.documentElement.lang;
+        element.textContent = element.getAttribute(`data-${lang}`);
+    });
+}
+
+// Function to toggle the visibility of the services section
+function toggleServices() {
+    const serviceSection = document.getElementById("specific-services");
+    serviceSection.classList.toggle("hidden");
+}
+
+// Function to toggle the visibility of the reservation calendar
+function toggleReservations() {
+    const reservationSection = document.getElementById("calendar");
+    reservationSection.classList.toggle("hidden");
+
+    if (!reservationSection.classList.contains("hidden")) {
+        generateCalendar();
+    }
+}
+
+// Function to handle the language button toggle (English/Spanish)
+document.getElementById("language-button").addEventListener("click", changeLanguage);
+
+// Function to handle the services button toggle (normal section, long section)
+document.getElementById("services-button").addEventListener("click", toggleServices);
+
+// Function to handle the reservation button toggle (reservations calendar)
+document.getElementById("reservations-button").addEventListener("click", toggleReservations);
+
+// Sample function to populate the reservation data dynamically (optional if you have a backend)
+function makeReservation(email, name, time, day) {
+    reservations.push({ email, name, time, day });
+    generateCalendar(); // Refresh the calendar with new reservation
+}
+
+// Initial setup to display reservations when the page loads
+generateCalendar();
