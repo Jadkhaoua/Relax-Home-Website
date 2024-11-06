@@ -1,0 +1,102 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+#calendar-container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Month Header */
+.calendar-month-header {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 0;
+    border-radius: 8px 8px 0 0;
+}
+
+/* Day Headers (Sun, Mon, Tue, etc.) */
+.calendar-day.header-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #e0e0e0;
+    padding: 5px;
+}
+
+.calendar-day.header {
+    text-align: center;
+    padding: 10px 0;
+    font-weight: bold;
+    background-color: #ccc;
+    color: #444;
+}
+
+/* Calendar Days */
+.calendar-day {
+    display: inline-block;
+    width: 13%;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.calendar-day:hover {
+    background-color: #f0f8ff;
+    transform: scale(1.05);
+}
+
+.calendar-day header {
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+}
+
+/* Reserved Slots */
+.reserved-slot {
+    font-size: 12px;
+    color: #333;
+    padding: 5px;
+    background-color: #ffeb3b;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-weight: normal;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .calendar-day {
+        width: 15%;
+    }
+
+    .calendar-day.header-row {
+        grid-template-columns: repeat(5, 1fr); /* Reduce days per row */
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-day {
+        width: 20%;
+    }
+
+    .calendar-day.header-row {
+        grid-template-columns: repeat(3, 1fr); /* Even fewer days per row */
+    }
+}
